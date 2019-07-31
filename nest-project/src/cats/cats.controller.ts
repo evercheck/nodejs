@@ -1,24 +1,28 @@
-import {Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Query, Req, Res} from '@nestjs/common';
-import {Request, Response} from 'express';
-import {CreateCatDto, UpdateCatDto, ListAllEntities} from './dto';
+import {Body, Controller, Delete, Get, Param, Post, Put} from '@nestjs/common';
+import {CreateCatDto, UpdateCatDto} from './dto';
+import {CatsService} from './cats.service';
+import {Cat} from './interfaces/cat.interface';
 
 @Controller('cats')
 export class CatsController {
+    constructor(private readonly catsService: CatsService) {}
 
     @Post()
-    async create(@Res() res: Response) {
-        res.status(HttpStatus.CREATED).send();
+    async create(@Body() createCatDto: CreateCatDto) {
+        this.catsService.create(createCatDto);
     }
 
     @Get()
-    findAll(@Res() res: Response) {
-        res.status(HttpStatus.OK).json(['selebum']);
+    async findAll(): Promise<Cat[]> {
+        return this.catsService.findAll();
     }
 
+/*
     @Get(':id')
     findOne(@Param('id') id): string {
         return `this action return a #${id} cat`;
     }
+*/
 
     @Put(':id')
     update(@Param('id') id: string, @Body() updateCatDto: UpdateCatDto) {
@@ -29,4 +33,5 @@ export class CatsController {
     remove(@Param('id') id: string) {
         return `this action remove a #${id} cat`;
     }
+
 }
