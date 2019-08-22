@@ -2,6 +2,7 @@ import {HttpAdapterHost, NestFactory} from '@nestjs/core';
 import {AppModule} from './app.module';
 import {NestExpressApplication} from '@nestjs/platform-express';
 import {AllExceptionsFilter} from './all-exceptions.filter';
+import {ValidationPipe} from './validation.pipe';
 
 async function bootstrap() {
     const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -9,7 +10,8 @@ async function bootstrap() {
     // app.use(logger);
 
     const {httpAdapter} = app.get(HttpAdapterHost);
-    app.useGlobalFilters(new AllExceptionsFilter(httpAdapter))
+    app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
+    app.useGlobalPipes(new ValidationPipe());
     await app.listen(3000);
 }
 
