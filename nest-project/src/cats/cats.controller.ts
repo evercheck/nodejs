@@ -8,8 +8,8 @@ import {
     Param,
     ParseUUIDPipe,
     Post,
-    Put,
-    UseFilters,
+    Put, SetMetadata,
+    UseFilters, UseGuards,
     UsePipes,
     ValidationPipe,
 } from '@nestjs/common';
@@ -19,8 +19,11 @@ import {Cat} from './interfaces/cat.interface';
 import {ForbiddenException} from '../forbidden.exception';
 import {HttpExceptionFilter} from '../http-exception.filter';
 import {ParseIntPipe} from '../parse-int.pipe';
+import {RolesGuard} from '../roles.guard';
+import {Roles} from '../roles.decorator';
 
 @Controller('cats')
+@UseGuards(RolesGuard)
 export class CatsController {
     constructor(private readonly catsService: CatsService) {
     }
@@ -28,6 +31,8 @@ export class CatsController {
     // @UsePipes(new JoiValidationPipe(CreateCatDto))
     @Post()
     @UsePipes(new ValidationPipe({transform: true}))
+    // @SetMetadata('roles', ['admin'])
+    @Roles('admin')
     @UseFilters(HttpExceptionFilter)
     async create(@Body() createCatDto: CreateCatDto) {
         this.catsService.create(createCatDto);
