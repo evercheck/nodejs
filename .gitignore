@@ -1,0 +1,10 @@
+# Projects
+
+# regcom
+regcom/node_modules
+regcom/package-lock.json
+regcom/lib/
+.vscode/
+.idea
+
+nest-project/node_modules
