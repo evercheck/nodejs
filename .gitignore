@@ -3,8 +3,10 @@
 # regcom
 regcom/node_modules
 regcom/package-lock.json
-regcom/lib/
-.vscode/
+regcom/lib
+.vscode
 .idea
 
 nest-project/node_modules
+nest-restaurant-api/run.sh
+nest-restaurant-api/access.sh
