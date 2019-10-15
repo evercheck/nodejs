@@ -3,9 +3,11 @@ import { ItemsController } from './items/items.controller';
 import { ItemsService } from './items/items.service';
 import { ShoppingCartController } from './shopping-cart/shopping-cart.controller';
 import { AuthenticationMiddleware } from './common/authentication.middleware';
+import { UsersModule } from './users/users.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-  imports: [],
+  imports: [TypeOrmModule.forRoot(), UsersModule],
   controllers: [ItemsController, ShoppingCartController],
   providers: [ItemsService],
 })
