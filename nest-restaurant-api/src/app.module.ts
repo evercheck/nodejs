@@ -5,11 +5,11 @@ import { ShoppingCartController } from './shopping-cart/shopping-cart.controller
 import { AuthenticationMiddleware } from './common/authentication.middleware';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ItemsModule } from './items/items.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), UsersModule],
-  controllers: [ItemsController, ShoppingCartController],
-  providers: [ItemsService],
+  imports: [TypeOrmModule.forRoot(), UsersModule, ItemsModule],
+  controllers: [ShoppingCartController],
 })
 
 export class AppModule {
@@ -17,7 +17,7 @@ export class AppModule {
     consumer
       .apply(AuthenticationMiddleware)
       .forRoutes(
-        { path: '/items', method: RequestMethod.POST },
+        // { path: '/items', method: RequestMethod.POST },
         { path: '/shopping-cart', method: RequestMethod.POST },
       );
   }
