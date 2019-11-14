@@ -2,16 +2,19 @@
 
 <div *ngFor="let product of products; index as productId">
     <h3>
-        <a [title]="product.name + ' details'" [routerLink]="['/products', productId]">
+        <a [title]="product.name + ' details'" href="{{product.url}}" target="_blank">
             {{product.name}}
         </a>
     </h3>
+    <img src="../../assets/img/mew.jpeg" alt="">
     <p *ngIf="product.description">
         Description: {{product.description}}
     </p>
+    <h4>{{product.salePrice | currency}}</h4>
+    <h4>{{product.price | currency}}</h4>
 
-    <button (click)="share()">Share</button>
+    <!-- <button (click)="share()">Share</button>
 
     <app-product-alerts [product]="product" (notify)="onNotify()">
-    </app-product-alerts>
+    </app-product-alerts> -->
 </div>

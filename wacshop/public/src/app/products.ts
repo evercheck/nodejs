@@ -1,18 +1,24 @@
 export const products = [
     {
-        name: 'Phone XL',
+        name: 'Mew XL',
         price: 799,
-        description: 'A large phone with one of the best screens'
+        salePrice: 399,
+        description: 'A large phone with one of the best screens',
+        url: 'http://www.google.com/search?q=mewxl'
     },
     {
-        name: 'Phone Mini',
+        name: 'Mew Mini',
         price: 699,
-        description: 'A great phone with one of the best cameras'
+        salePrice: 499,
+        description: 'A great phone with one of the best cameras',
+        url: 'http://www.google.com/search?q=mewmini'
     },
     {
-        name: 'Phone Standard',
+        name: 'Mew Standard',
         price: 299,
-        description: ''
+        salePrice: 199,
+        description: '',
+        url: 'http://www.google.com/search?q=mewstandard'
     }
 ];
 
