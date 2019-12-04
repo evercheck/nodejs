@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "friendlychat-a6c70"
+    "default": "wacshop-5192a",
+    "dev": "wacshop-5192a"
   }
 }

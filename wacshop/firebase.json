@@ -10,12 +10,14 @@
     "predeploy": "npm --prefix \"$RESOURCE_DIR\" run build"
   },
   "hosting": {
+    "predeploy": "npm --prefix public run build",
     "public": "public/dist/public",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ]
+    ],
+    "site": "shopwac"
   },
   "storage": {
     "rules": "storage.rules"
