@@ -10,4 +10,4 @@ import { ItemsModule } from './items/items.module';
   controllers: [AppController, ItemsController],
   providers: [AppService, ItemsService],
 })
-export class AppModule {}
+export class AppModule { }
