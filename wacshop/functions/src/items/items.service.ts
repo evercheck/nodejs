@@ -1,18 +1,29 @@
-import { Injectable } from '@nestjs/common';
-import { Item } from './item.interface';
+import {Injectable} from '@nestjs/common';
+import {Item} from './item.interface';
 import db from '../common/repository';
 
 @Injectable()
 export class ItemsService {
 
-    private readonly items: Item[] = [];
+    private readonly collection: string = 'items';
 
-    findAll(): Item[] {
-        return this.items;
+    getByEmail(email: string): Promise<Item> {
+        return db.collection(this.collection).doc(email).get()
+            .then(doc => {
+                if (!doc.exists) {
+                    console.log('No such document!');
+                    return null;
+                } else {
+                    return doc.data();
+                }
+            })
+            .catch(err => {
+                console.log('Error getting documents', err);
+                return null;
+            });
     }
 
     create(item: Item) {
-        console.log('CREATE ITEM');
         db.collection('items').doc(item.name).set(item);
     }
 }
