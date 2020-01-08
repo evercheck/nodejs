@@ -1,22 +1,22 @@
-import {Controller, Get, Post, Body, UsePipes, Param} from '@nestjs/common';
-import { ItemsService } from './items.service';
-import { Item } from './item.interface';
-import { ValidationPipe } from '../common/validation.pipe';
-import { CreateItemDto } from './create-item.dto';
+import {Body, Controller, Get, Param, Post, UsePipes} from '@nestjs/common';
+import {ItemsService} from './items.service';
+import {ValidationPipe} from '../common/validation.pipe';
+import {ItemModel} from './item.model';
 
 @Controller('items')
 export class ItemsController {
 
-    constructor(private readonly itemsService: ItemsService) { }
+    constructor(private readonly itemsService: ItemsService) {
+    }
 
     @Get(':email')
-    async getByEmail(@Param('email') email: string): Promise<Item> {
+    async getByEmail(@Param('email') email: string): Promise<ItemModel> {
         return this.itemsService.getByEmail(email);
     }
 
     @Post()
     @UsePipes(new ValidationPipe())
-    async create(@Body() createItemDto: CreateItemDto) {
+    async create(@Body() createItemDto: ItemModel) {
         this.itemsService.create(createItemDto);
     }
 }

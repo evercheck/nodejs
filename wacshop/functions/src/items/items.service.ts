@@ -1,13 +1,13 @@
 import {Injectable} from '@nestjs/common';
-import {Item} from './item.interface';
 import db from '../common/repository';
+import {ItemModel} from './item.model';
 
 @Injectable()
 export class ItemsService {
 
     private readonly collection: string = 'items';
 
-    getByEmail(email: string): Promise<Item> {
+    getByEmail(email: string): Promise<ItemModel> {
         return db.collection(this.collection).doc(email).get()
             .then(doc => {
                 if (!doc.exists) {
@@ -23,7 +23,7 @@ export class ItemsService {
             });
     }
 
-    create(item: Item) {
+    create(item: ItemModel) {
         db.collection('items').doc(item.name).set(item);
     }
 }
