@@ -7,14 +7,18 @@ export class ItemsService {
 
     private readonly collection: string = 'items';
 
-    getByEmail(email: string): Promise<ItemModel> {
-        return db.collection(this.collection).doc(email).get()
+    getById(id: string): Promise<ItemModel> {
+        return db.collection(this.collection).doc(id).get()
             .then(doc => {
                 if (!doc.exists) {
                     console.log('No such document!');
                     return null;
                 } else {
-                    return doc.data();
+                    return ({
+                        id: doc.id,
+                        name: doc.data().name,
+                        price: doc.data().price
+                    });
                 }
             })
             .catch(err => {
@@ -24,6 +28,17 @@ export class ItemsService {
     }
 
     create(item: ItemModel) {
-        db.collection('items').doc(item.name).set(item);
+        // db.collection(this.collection).doc(item.name).set(item);
+        db.collection(this.collection).add(item)
+            .then(ref => {
+                console.log('Added document with ID: ', ref.id);
+            });
+    }
+
+    update(item: ItemModel) {
+        db.collection(this.collection).doc(item.id).set({
+            name: item.name,
+            price: item.price
+        });
     }
 }
