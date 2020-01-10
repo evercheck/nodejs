@@ -10,8 +10,8 @@ export class ItemsController {
     }
 
     @Get(':id')
-    async getById(@Param('id') id: string): Promise<ItemModel> {
-        return this.itemsService.getById(id);
+    async getById(@Param('id') id: string): Promise<ItemModel[]> {
+        return this.itemsService.getItemsByUserId(id);
     }
 
     @Post()

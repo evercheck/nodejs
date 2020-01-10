@@ -1,6 +1,8 @@
 import {Injectable} from '@nestjs/common';
 import db from '../common/repository';
 import {ItemModel} from './item.model';
+import {collections} from '../common/collections';
+import {plainToClass} from 'class-transformer';
 
 @Injectable()
 export class ItemsService {
@@ -40,5 +42,37 @@ export class ItemsService {
             name: item.name,
             price: item.price
         });
+    }
+
+    getAllByUserId(userId: string): Promise<ItemModel> {
+        const itemsCol = db.collection(collections.items);
+        const usersCol = db.collection(collections.users);
+        return itemsCol.doc(userId).get()
+            .then(doc => {
+                const user: ItemModel = plainToClass(ItemModel, doc.data());
+                return user;
+            });
+    }
+
+    getItemsByUserId(userId: string): Promise<ItemModel[]> {
+        const itemsCol = db.collection(collections.items);
+        const items: ItemModel[] = [];
+
+        return itemsCol.where('userId', '==', userId).get()
+            .then(snapshot => {
+                if (snapshot.empty) {
+                    console.log('No matching document.');
+                    return null;
+                } else {
+                    snapshot.forEach(doc => {
+                        console.log('Found item: ', doc.data());
+                        items.push(plainToClass(ItemModel, doc.data()));
+                    });
+                    return items;
+                }
+            }).catch(err => {
+                console.log('Error getting documents', err);
+                return null;
+            });
     }
 }
